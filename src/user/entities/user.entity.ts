@@ -30,7 +30,7 @@ export class User {
     @OneToMany(() => CommPlaceUserRegistry, registry => registry.user)
     commKitchenRegistry: CommPlaceUserRegistry[];
 
-    @ManyToMany(() => CommPlace, commPlace => commPlace.users, { nullable: true })
+    @ManyToMany(() => CommPlace, commPlace => commPlace.users, { nullable: true, eager: true})
     @JoinTable({ name: 'comm_places_users' })
     commPlaces: CommPlace[];
 
