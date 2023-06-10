@@ -50,13 +50,19 @@ export class CommunityEntityService {
   }
 
   findAll() {
-    return this.commEntityRepository.find({ loadEagerRelations: true });
+    return this.commEntityRepository.find({ relations: {
+        commPlaces: true,
+        person: true,
+    } });
   }
 
   findOne(id: number) {
     return this.commEntityRepository.findOneOrFail({
       where: { id },
-      loadEagerRelations: true,
+      relations: {
+        commPlaces: true,
+        person: true,
+      }
     });
   }
 
