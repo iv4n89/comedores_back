@@ -7,6 +7,7 @@ import { CommKitchenModule } from './comm_place/comm_place.module';
 import { CountryModule } from './country/country.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -15,6 +16,11 @@ import { AuthModule } from './auth/auth.module';
       database: 'db/db.sqlite',
       autoLoadEntities: true,
       synchronize: true
+    }),
+    ConfigModule.forRoot({
+      load: [() => ({
+        port: parseInt(process.env.PORT, 10) || 3000,
+      })],
     }),
     UserModule,
     CountryModule,
