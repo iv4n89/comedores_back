@@ -6,10 +6,11 @@ import { User } from './entities/user.entity';
 import { IdentityDoc } from './entities/identityDoc.entity';
 import { Address } from './entities/address.entity';
 import { CommPlace } from 'src/comm_place/entities/comm_place.entity';
+import { CommPlaceUserRegistry } from 'src/comm_place/entities/user_registry.entity';
 
 @Module({
   controllers: [UserController],
   providers: [UserService],
-  imports: [TypeOrmModule.forFeature([User, IdentityDoc, Address, CommPlace])]
+  imports: [TypeOrmModule.forFeature([User, IdentityDoc, Address, CommPlace, CommPlaceUserRegistry])]
 })
 export class UserModule {}

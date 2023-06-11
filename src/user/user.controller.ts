@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Res } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -20,6 +20,16 @@ export class UserController {
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.userService.findOne(id);
+  }
+
+  @Get('qr/:id')
+  getQr(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.getQrCode(id);
+  }
+
+  @Get('enter/place/:placeId/:id')
+  async attemptToEnter(@Param('placeId', ParseIntPipe) placeId: number, @Param('id', ParseIntPipe) id: number) {
+    return this.userService.attemptToEnterPlace(id, placeId);
   }
 
   @Post('by/name')
