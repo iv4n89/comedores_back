@@ -30,6 +30,9 @@ export class CommPlace {
     @Column('varchar', { name: 'type', nullable: false, default: 'community kitchen' })
     type: CommPlaceType;
 
+    @Column('varchar', { name: 'telephone', nullable: true })
+    telephnone: string;
+
     @ManyToOne(() => Address, address => address.commPlaces, { eager: true })
     @JoinColumn({ name: 'address_id' })
     address: Address;
@@ -61,18 +64,7 @@ export class CommPlace {
     city: City;
 
     @IsOptional()
-    postalCodes: string[];
-
-    @IsOptional()
     responsibleTlf: string;
-
-    @AfterLoad()
-    getCity() {
-        if (this?.address && this?.address?.city) {
-            this.city = this.address.city;
-            this.postalCodes = this.address.city.postalCode.split(',');
-        }
-    }
 
     @AfterLoad()
     getResponsibleTlf() {

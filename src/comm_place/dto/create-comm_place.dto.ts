@@ -18,6 +18,9 @@ export class CreateCommPlaceDto {
     type?: CommPlaceType;
 
     @IsOptional()
+    telephone?: string;
+
+    @IsOptional()
     address?: Partial<Address>;
 
     @IsOptional()

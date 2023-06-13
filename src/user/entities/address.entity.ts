@@ -28,6 +28,9 @@ export class Address {
     @Column('varchar', { name: 'door', nullable: true })
     door: string;
 
+    @Column('varchar', { name: 'postal_code', nullable: true })
+    postalCode: string;
+
     @Column('varchar', { name: 'extra_info', nullable: true })
     extraInfo: string;
     
@@ -39,7 +42,7 @@ export class Address {
     @JoinColumn({ name: 'state_id' })
     state: State;
 
-    @ManyToOne(() => Province, province => province.addresses)
+    @ManyToOne(() => Province, province => province.addresses, { eager: true })
     @JoinColumn({ name: 'province_id' })
     province: Province;
 

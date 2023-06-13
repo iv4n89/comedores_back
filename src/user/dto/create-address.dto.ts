@@ -37,6 +37,13 @@ export class CreateAddressDto {
 
     @IsOptional()
     @IsInt()
+    province: number;
+
+    @IsOptional()
+    @IsInt()
     city: number;
+
+    @IsOptional()
+    postalCode: string;
 
 }

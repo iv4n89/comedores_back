@@ -12,9 +12,6 @@ export class City {
     @Column('varchar', { name: 'name', nullable: false })
     name: string;
 
-    @Column('text', { name: 'postal_code', nullable: false })
-    postalCode: string;
-
     @ManyToOne(() => Province, province => province.cities, { eager: true })
     @JoinColumn({ name: 'province_id' })
     province: Province;

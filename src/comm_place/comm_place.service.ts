@@ -25,6 +25,7 @@ export class CommPlaceService {
     const commPlace = this.commPlaceRepository.create({
       cif: createCommPlaceDto.cif,
       name: createCommPlaceDto?.name,
+      telephnone: createCommPlaceDto?.telephone,
       type: createCommPlaceDto?.type || 'community kitchen',
     });
 
