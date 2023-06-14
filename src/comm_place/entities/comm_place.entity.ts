@@ -31,7 +31,7 @@ export class CommPlace {
     type: CommPlaceType;
 
     @Column('varchar', { name: 'telephone', nullable: true })
-    telephnone: string;
+    telephone: string;
 
     @ManyToOne(() => Address, address => address.commPlaces, { eager: true })
     @JoinColumn({ name: 'address_id' })

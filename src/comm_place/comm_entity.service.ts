@@ -1,10 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateCommunityEntityDto } from './dto/create-comm_entity.dto';
 import { UpdateCommunityEntityDto } from './dto/update-comm_entity.dto';
 import { CommunityEntity } from './entities/comm_entity.entity';
 import { CommunityEntityPerson } from './entities/comm_entity_person.entity';
+import { CommPlace } from './entities/comm_place.entity';
 
 @Injectable()
 export class CommunityEntityService {
@@ -13,6 +14,8 @@ export class CommunityEntityService {
     private readonly commEntityRepository: Repository<CommunityEntity>,
     @InjectRepository(CommunityEntityPerson)
     private readonly commEntityPersonRepository: Repository<CommunityEntityPerson>,
+    @InjectRepository(CommPlace)
+    private readonly commPlaceRepository: Repository<CommPlace>,
   ) {}
 
   async create(createCommEntityDto: CreateCommunityEntityDto) {
@@ -30,6 +33,11 @@ export class CommunityEntityService {
       nif: createCommEntityDto.nif,
       applicableRate: createCommEntityDto?.applicableRate || 0.5,
     });
+
+    if (createCommEntityDto?.places) {
+      const places = await this.commPlaceRepository.find({ where: { id: In(createCommEntityDto.places) } });
+      commEntity.commPlaces = places;
+    }
 
     const entity = await this.commEntityRepository.save(commEntity);
 
@@ -107,6 +115,11 @@ export class CommunityEntityService {
         _commEntity.person = _person;
         delete updateCommEntityDto.person;
       }
+    }
+    if (updateCommEntityDto?.places) {
+      const places = await this.commPlaceRepository.find({ where: { id: In(updateCommEntityDto.places) } });
+      _commEntity.commPlaces = places;
+      delete updateCommEntityDto.places;
     }
     Object.assign(_commEntity, updateCommEntityDto);
     return this.commEntityRepository.save(_commEntity);
