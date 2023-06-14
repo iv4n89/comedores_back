@@ -197,14 +197,14 @@ export class UserService {
         },
         loadEagerRelations: true,
       });
-      user.commPlaces = [
-        ...(places.some((p) => p.type === 'community kitchen') && [
-          places.find((p) => p.type === 'community kitchen'),
-        ]),
-        ...(places.some((p) => p.type === 'company store') && [
-          places.find((p) => p.type === 'company store'),
-        ]),
-      ];
+      user.commPlaces = places.length && [
+        ...(places?.some((p) => p.type === 'community kitchen') && [
+          places?.find((p) => p.type === 'community kitchen'),
+        ] || []),
+        ...(places?.some((p) => p.type === 'company store') && [
+          places?.find((p) => p.type === 'company store'),
+        ] || []),
+      ] || [];
       delete updateUserDto?.places;
     }
 
